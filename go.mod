@@ -1,3 +1,3 @@
-module bookings-udemy
+module github.com/jamshu/go_web_app
 
-go 1.15
+go 1.20
