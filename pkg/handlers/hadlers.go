@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+
 	"github.com/jamshu/go_web_app/pkg/render"
 )
 
@@ -17,7 +18,7 @@ func About(w http.ResponseWriter, r *http.Request) {
 
 // Contact is the handler for the contact page
 func Contact(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "contact.html")
+	render.RenderTemplate(w, "contact.page.tmpl")
 }
 
 
