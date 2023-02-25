@@ -28,7 +28,10 @@ func NewHandler(r *Repository) {
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "Hello world!"
-
+	remoteIP := r.RemoteAddr
+	my_secret_key := "its my secret key 9880000"
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+	m.App.Session.Put(r.Context(), "secret_key", my_secret_key)
 	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
@@ -36,7 +39,16 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 // About is the handler for the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{})
+	stringMap := make(map[string]string)
+	
+
+	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
+	secret_key := m.App.Session.GetString(r.Context(),"secret_key")
+	stringMap["remote_ip"] = remoteIP
+	stringMap["secret_key"] = secret_key
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }
 
 // Contact is the handler for the contact page
